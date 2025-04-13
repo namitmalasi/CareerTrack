@@ -1,4 +1,5 @@
 import { useJobs } from "../context/JobsContext";
+import { Link } from "react-router-dom";
 
 const JobCard = ({ job }) => {
   const { deleteJob } = useJobs();
@@ -32,9 +33,12 @@ const JobCard = ({ job }) => {
       </div>
 
       <div className="mt-4 flex gap-3">
-        <button className="text-indigo-600 hover:underline text-sm">
+        <Link
+          to={`/edit/${id}`}
+          className="text-indigo-600 hover:underline text-sm"
+        >
           Edit
-        </button>
+        </Link>
         <button
           className="text-red-500 hover:underline text-sm"
           onClick={() => deleteJob(id)}

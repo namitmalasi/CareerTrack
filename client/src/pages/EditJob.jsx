@@ -1,19 +1,20 @@
-import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useJobs } from "../context/JobsContext";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-const AddJob = () => {
-  const { addJob } = useJobs();
+const EditJob = () => {
+  const { id } = useParams();
+  const { jobs, updateJob } = useJobs();
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    title: "",
-    company: "",
-    location: "",
-    status: "Applied",
-    type: "Full-Time",
-    date: new Date().toISOString().split("T")[0],
-  });
+  const [formData, setFormData] = useState(null);
+
+  useEffect(() => {
+    const jobToEdit = jobs.find((j) => j.id === Number(id));
+    if (jobToEdit) {
+      setFormData(jobToEdit);
+    }
+  }, [id, jobs]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,14 +23,15 @@ const AddJob = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addJob(formData);
+    updateJob(formData);
     navigate("/");
-    // Later we'll connect this to the backend
   };
+
+  if (!formData) return <p className="text-gray-500">Loading...</p>;
 
   return (
     <div className="max-w-xl mx-auto bg-white shadow-md p-6 rounded-xl">
-      <h2 className="text-xl font-semibold mb-4 text-gray-800">Add New Job</h2>
+      <h2 className="text-xl font-semibold mb-4 text-gray-800">Edit Job</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm text-gray-600">Job Title</label>
@@ -42,7 +44,6 @@ const AddJob = () => {
             required
           />
         </div>
-
         <div>
           <label className="block text-sm text-gray-600">Company</label>
           <input
@@ -54,7 +55,6 @@ const AddJob = () => {
             required
           />
         </div>
-
         <div>
           <label className="block text-sm text-gray-600">Location</label>
           <input
@@ -65,7 +65,6 @@ const AddJob = () => {
             className="w-full p-2 border rounded-md mt-1"
           />
         </div>
-
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm text-gray-600">Status</label>
@@ -81,7 +80,6 @@ const AddJob = () => {
               <option>Offer</option>
             </select>
           </div>
-
           <div>
             <label className="block text-sm text-gray-600">Job Type</label>
             <select
@@ -97,7 +95,6 @@ const AddJob = () => {
             </select>
           </div>
         </div>
-
         <div>
           <label className="block text-sm text-gray-600">Applied Date</label>
           <input
@@ -108,16 +105,15 @@ const AddJob = () => {
             className="w-full p-2 border rounded-md mt-1"
           />
         </div>
-
         <button
           type="submit"
           className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition"
         >
-          Add Job
+          Update Job
         </button>
       </form>
     </div>
   );
 };
 
-export default AddJob;
+export default EditJob;
