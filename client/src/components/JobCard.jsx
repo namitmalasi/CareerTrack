@@ -1,5 +1,8 @@
+import { useJobs } from "../context/JobsContext";
+
 const JobCard = ({ job }) => {
-  const { title, company, location, status, type, date } = job;
+  const { deleteJob } = useJobs();
+  const { id, title, company, location, status, type, date } = job;
 
   return (
     <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-200 hover:shadow-md transition">
@@ -32,7 +35,12 @@ const JobCard = ({ job }) => {
         <button className="text-indigo-600 hover:underline text-sm">
           Edit
         </button>
-        <button className="text-red-500 hover:underline text-sm">Delete</button>
+        <button
+          className="text-red-500 hover:underline text-sm"
+          onClick={() => deleteJob(id)}
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

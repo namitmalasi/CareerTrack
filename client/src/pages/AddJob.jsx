@@ -1,6 +1,11 @@
 import { useState } from "react";
+import { useJobs } from "../context/JobsContext";
+import { useNavigate } from "react-router-dom";
 
 const AddJob = () => {
+  const { addJob } = useJobs();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     title: "",
     company: "",
@@ -17,7 +22,8 @@ const AddJob = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Submitted:", formData);
+    addJob(formData);
+    navigate("/dashboard");
     // Later we'll connect this to the backend
   };
 
