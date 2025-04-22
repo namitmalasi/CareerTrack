@@ -26,6 +26,8 @@ export const getJobs = async (req, res) => {
 
 // Update a job
 export const updateJob = async (req, res) => {
+  const { id } = req.params;
+
   try {
     const job = await Job.findOneAndUpdate(
       { _id: req.params.id, createdBy: req.user },

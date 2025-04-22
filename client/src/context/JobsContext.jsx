@@ -30,7 +30,7 @@ export const JobsProvider = ({ children }) => {
     };
 
     fetchJobs();
-  }, [jobs]);
+  }, []);
 
   const addJob = async (job) => {
     try {
@@ -45,7 +45,7 @@ export const JobsProvider = ({ children }) => {
 
   const updateJob = async (updatedJob, id) => {
     try {
-      const res = await axios.patch(
+      const res = await axios.put(
         `http://localhost:5000/api/jobs/${id}`,
         updatedJob,
         {

@@ -72,7 +72,7 @@ const Dashboard = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {filteredJobs.length > 0 ? (
-          filteredJobs.map((job) => <JobCard key={job.id} job={job} />)
+          filteredJobs.map((job) => <JobCard key={job._id} job={job} />)
         ) : (
           <p className="text-gray-600">No jobs found.</p>
         )}

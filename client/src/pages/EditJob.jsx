@@ -9,22 +9,23 @@ const EditJob = () => {
 
   const [formData, setFormData] = useState(null);
 
+  const jobToEdit = jobs.find((j) => j._id === id);
+
   useEffect(() => {
-    const jobToEdit = jobs.find((j) => j.id === Number(id));
     if (jobToEdit) {
       setFormData(jobToEdit);
     }
-  }, [id, jobs]);
+  }, [jobToEdit]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    // const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    updateJob(formData, id);
-    navigate("/");
+    await updateJob(formData, id);
+    navigate("/dashboard");
   };
 
   if (!formData) return <p className="text-gray-500">Loading...</p>;
