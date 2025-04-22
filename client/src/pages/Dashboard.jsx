@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import JobCard from "../components/JobCard";
 import { useJobs } from "../context/JobsContext";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [searchText, setSearchText] = useState("");
@@ -10,21 +11,31 @@ const Dashboard = () => {
   const { jobs } = useJobs();
 
   const filteredJobs = jobs.filter((job) => {
-    const matchesSearch =
-      job.title.toLowerCase().includes(searchText.toLowerCase()) ||
-      job.company.toLowerCase().includes(searchText.toLowerCase());
+    // const matchesSearch =
+    //   job.title.toLowerCase().includes(searchText.toLowerCase()) ||
+    //   job.company.toLowerCase().includes(searchText.toLowerCase());
 
     const matchesStatus = statusFilter === "All" || job.status === statusFilter;
 
     const matchesType = typeFilter === "All" || job.type === typeFilter;
 
-    return matchesSearch && matchesStatus && matchesType;
+    return matchesStatus && matchesType;
   });
 
   if (!jobs.length) return <p className="text-gray-500">No jobs added yet.</p>;
 
   return (
     <>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-semibold">Your Jobs</h2>
+        <Link
+          to="/add-job"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+        >
+          + Add Job
+        </Link>
+      </div>
+
       <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
         <input
           type="text"

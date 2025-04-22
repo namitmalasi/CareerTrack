@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const JobCard = ({ job }) => {
   const { deleteJob } = useJobs();
-  const { id, title, company, location, status, type, date } = job;
+  const { _id, title, company, location, status, type, date } = job;
 
   return (
     <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-200 hover:shadow-md transition">
@@ -34,14 +34,14 @@ const JobCard = ({ job }) => {
 
       <div className="mt-4 flex gap-3">
         <Link
-          to={`/edit/${id}`}
+          to={`/edit/${_id}`}
           className="text-indigo-600 hover:underline text-sm"
         >
           Edit
         </Link>
         <button
           className="text-red-500 hover:underline text-sm"
-          onClick={() => deleteJob(id)}
+          onClick={() => deleteJob(_id)}
         >
           Delete
         </button>

@@ -23,7 +23,7 @@ const EditJob = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateJob(formData);
+    updateJob(formData, id);
     navigate("/");
   };
 
